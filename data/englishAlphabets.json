@@ -1,0 +1,77 @@
+{
+  "vowels": [
+    {
+      "id": "A",
+      "character": "A",
+      "name": "A",
+      "pronunciation": "ay",
+      "words": [
+        { "id": "a-1", "text": "Apple", "pronunciation": "AP-uhl", "meaning": "a fruit", "image": "" },
+        { "id": "a-2", "text": "Ant", "pronunciation": "ant", "meaning": "an insect", "image": "" }
+      ]
+    },
+    {
+      "id": "E",
+      "character": "E",
+      "name": "E",
+      "pronunciation": "ee",
+      "words": [
+        { "id": "e-1", "text": "Elephant", "pronunciation": "EL-uh-funt", "meaning": "a large animal", "image": "" },
+        { "id": "e-2", "text": "Egg", "pronunciation": "eg", "meaning": "food from a chicken", "image": "" }
+      ]
+    },
+    {
+      "id": "I",
+      "character": "I",
+      "name": "I",
+      "pronunciation": "eye",
+      "words": [
+        { "id": "i-1", "text": "Ice", "pronunciation": "ice", "meaning": "frozen water", "image": "" },
+        { "id": "i-2", "text": "Igloo", "pronunciation": "IG-loo", "meaning": "ice house", "image": "" }
+      ]
+    },
+    {
+      "id": "O",
+      "character": "O",
+      "name": "O",
+      "pronunciation": "oh",
+      "words": [
+        { "id": "o-1", "text": "Orange", "pronunciation": "OR-inj", "meaning": "a fruit", "image": "" },
+        { "id": "o-2", "text": "Owl", "pronunciation": "owl", "meaning": "a bird", "image": "" }
+      ]
+    },
+    {
+      "id": "U",
+      "character": "U",
+      "name": "U",
+      "pronunciation": "you",
+      "words": [
+        { "id": "u-1", "text": "Umbrella", "pronunciation": "um-BREL-uh", "meaning": "keeps you dry", "image": "" },
+        { "id": "u-2", "text": "Unicorn", "pronunciation": "YOO-nih-korn", "meaning": "a magical animal", "image": "" }
+      ]
+    }
+  ],
+  "consonants": [
+    { "id": "B", "character": "B", "name": "B", "pronunciation": "bee", "words": [ { "id": "b-1", "text": "Ball", "pronunciation": "bawl", "meaning": "a round toy", "image": "" } ] },
+    { "id": "C", "character": "C", "name": "C", "pronunciation": "see", "words": [ { "id": "c-1", "text": "Cat", "pronunciation": "kat", "meaning": "a pet animal", "image": "" } ] },
+    { "id": "D", "character": "D", "name": "D", "pronunciation": "dee", "words": [ { "id": "d-1", "text": "Dog", "pronunciation": "dawg", "meaning": "a pet animal", "image": "" } ] },
+    { "id": "F", "character": "F", "name": "F", "pronunciation": "ef", "words": [ { "id": "f-1", "text": "Fish", "pronunciation": "fish", "meaning": "an animal that swims", "image": "" } ] },
+    { "id": "G", "character": "G", "name": "G", "pronunciation": "jee", "words": [ { "id": "g-1", "text": "Goat", "pronunciation": "goht", "meaning": "a farm animal", "image": "" } ] },
+    { "id": "H", "character": "H", "name": "H", "pronunciation": "aitch", "words": [ { "id": "h-1", "text": "Hat", "pronunciation": "hat", "meaning": "clothing for the head", "image": "" } ] },
+    { "id": "J", "character": "J", "name": "J", "pronunciation": "jay", "words": [ { "id": "j-1", "text": "Jam", "pronunciation": "jam", "meaning": "sweet fruit spread", "image": "" } ] },
+    { "id": "K", "character": "K", "name": "K", "pronunciation": "kay", "words": [ { "id": "k-1", "text": "Kite", "pronunciation": "kyt", "meaning": "flies in the wind", "image": "" } ] },
+    { "id": "L", "character": "L", "name": "L", "pronunciation": "el", "words": [ { "id": "l-1", "text": "Lion", "pronunciation": "LY-on", "meaning": "a big cat", "image": "" } ] },
+    { "id": "M", "character": "M", "name": "M", "pronunciation": "em", "words": [ { "id": "m-1", "text": "Moon", "pronunciation": "moon", "meaning": "in the night sky", "image": "" } ] },
+    { "id": "N", "character": "N", "name": "N", "pronunciation": "en", "words": [ { "id": "n-1", "text": "Nest", "pronunciation": "nest", "meaning": "a bird's home", "image": "" } ] },
+    { "id": "P", "character": "P", "name": "P", "pronunciation": "pee", "words": [ { "id": "p-1", "text": "Pen", "pronunciation": "pen", "meaning": "used for writing", "image": "" } ] },
+    { "id": "Q", "character": "Q", "name": "Q", "pronunciation": "cue", "words": [ { "id": "q-1", "text": "Queen", "pronunciation": "kween", "meaning": "a royal woman", "image": "" } ] },
+    { "id": "R", "character": "R", "name": "R", "pronunciation": "ar", "words": [ { "id": "r-1", "text": "Rabbit", "pronunciation": "RAB-it", "meaning": "a hopping animal", "image": "" } ] },
+    { "id": "S", "character": "S", "name": "S", "pronunciation": "es", "words": [ { "id": "s-1", "text": "Sun", "pronunciation": "sun", "meaning": "the star of our solar system", "image": "" } ] },
+    { "id": "T", "character": "T", "name": "T", "pronunciation": "tee", "words": [ { "id": "t-1", "text": "Tree", "pronunciation": "tree", "meaning": "a tall plant", "image": "" } ] },
+    { "id": "V", "character": "V", "name": "V", "pronunciation": "vee", "words": [ { "id": "v-1", "text": "Van", "pronunciation": "van", "meaning": "a vehicle", "image": "" } ] },
+    { "id": "W", "character": "W", "name": "W", "pronunciation": "double u", "words": [ { "id": "w-1", "text": "Water", "pronunciation": "WAW-ter", "meaning": "we drink it", "image": "" } ] },
+    { "id": "X", "character": "X", "name": "X", "pronunciation": "eks", "words": [ { "id": "x-1", "text": "Box", "pronunciation": "boks", "meaning": "a container", "image": "" } ] },
+    { "id": "Y", "character": "Y", "name": "Y", "pronunciation": "why", "words": [ { "id": "y-1", "text": "Yak", "pronunciation": "yak", "meaning": "an animal with long hair", "image": "" } ] },
+    { "id": "Z", "character": "Z", "name": "Z", "pronunciation": "zee", "words": [ { "id": "z-1", "text": "Zebra", "pronunciation": "ZEE-bruh", "meaning": "a striped animal", "image": "" } ] }
+  ]
+}
