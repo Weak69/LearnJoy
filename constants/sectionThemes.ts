@@ -1,11 +1,11 @@
 export const sectionThemes = {
   swaraborna: {
-    gradient: ['#4caf50ff', '#81C784'] as const,
-    accent: '#4CAF50',
+    gradient: ['#645BFF', '#9F9BFF'] as const,
+    accent: '#645BFF',
   },
   banjonborno: {
-    gradient: ['#4caf50ff', '#81C784'] as const,
-    accent: '#4CAF50',
+    gradient: ['#4BA3FF', '#8FD3FF'] as const,
+    accent: '#4BA3FF',
   },
   // English categories
   vowels: {

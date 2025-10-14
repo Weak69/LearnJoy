@@ -1,44 +1,44 @@
 export const colors = {
   // Primary learning colors (bright and cheerful)
   primary: {
-    50: '#E8F5E8',
-    100: '#C8E6C9',
-    200: '#A5D6A7',
-    300: '#81C784',
-    400: '#66BB6A',
-    500: '#4CAF50', // Main primary
-    600: '#43A047',
-    700: '#388E3C',
-    800: '#2E7D32',
-    900: '#1B5E20',
+    50: '#F5F7FF',
+    100: '#E8EEFF',
+    200: '#D8E2FF',
+    300: '#C6D4FF',
+    400: '#9FB3F5',
+    500: '#6B7FD7', // Main primary (bangla theme)
+    600: '#5A6EC6',
+    700: '#4A5DB5',
+    800: '#3B4AA0',
+    900: '#2C387A',
   },
   
   // Secondary colors (orange for math)
   secondary: {
-    50: '#FFF3E0',
-    100: '#FFE0B2',
-    200: '#FFCC80',
-    300: '#FFB74D',
-    400: '#FFA726',
-    500: '#FF9800', // Main secondary
-    600: '#FB8C00',
-    700: '#F57C00',
-    800: '#EF6C00',
-    900: '#E65100',
+    50: '#F0FAFF',
+    100: '#E6F4FF',
+    200: '#CFF0FF',
+    300: '#9FDFFF',
+    400: '#6FCFFF',
+    500: '#4BA3FF', // Main secondary (soft blue)
+    600: '#1E8BFF',
+    700: '#1777D1',
+    800: '#125EA6',
+    900: '#0D456E',
   },
   
   // Accent colors (pink for fun)
   accent: {
-    50: '#FCE4EC',
-    100: '#F8BBD9',
-    200: '#F48FB1',
-    300: '#F06292',
-    400: '#EC407A',
-    500: '#E91E63', // Main accent
-    600: '#D81B60',
-    700: '#C2185B',
-    800: '#AD1457',
-    900: '#880E4F',
+    50: '#F7F5FF',
+    100: '#EFEAFF',
+    200: '#E0DBFF',
+    300: '#D6CCFF',
+    400: '#B9A8FF',
+    500: '#6B7FD7', // use primary family for accent
+    600: '#5A6EC6',
+    700: '#4A5DB5',
+    800: '#3B4AA0',
+    900: '#2C387A',
   },
   
   // Status colors
@@ -82,17 +82,18 @@ export const colors = {
   // Background colors
   background: {
     primary: '#FFFFFF',
-    secondary: '#F8F9FA',
-    tertiary: '#F5F5F5',
-    card: '#FAFAFA',
+    secondary: '#F5F7FF',
+    tertiary: '#F5F7FF',
+    card: '#FFFFFF',
     modal: 'rgba(0, 0, 0, 0.5)',
   },
   
   // Text colors
   text: {
-    primary: '#212121',
-    secondary: '#757575',
-    tertiary: '#BDBDBD',
+    primary: '#333333',
+    heading: '#6B7FD7',
+    secondary: '#475569',
+    tertiary: '#94A3B8',
     onPrimary: '#FFFFFF',
     onSecondary: '#FFFFFF',
     onAccent: '#FFFFFF',
@@ -100,10 +101,10 @@ export const colors = {
   
   // Border colors
   border: {
-    light: '#E0E0E0',
+    light: '#E0E5FF',
     medium: '#BDBDBD',
     dark: '#757575',
-    focus: '#4CAF50',
+    focus: '#6B7FD7',
     error: '#F44336',
   },
 };

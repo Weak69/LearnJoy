@@ -16,8 +16,7 @@ interface EnglishLetter {
   id: string;
   character: string;
   name: string;
-  pronunciation: string;
-  words: { id: string; text: string; pronunciation: string; meaning: string; image?: string }[];
+  words: { id: string; text: string; meaning: string; image?: string }[];
 }
 
 const { width, height } = Dimensions.get('window');
@@ -44,7 +43,7 @@ export default function EnglishAlphabetScreen() {
     const isVowel = vowels.some((v) => v.id === letter.id);
     router.push({
       pathname: '/english-letter-detail',
-      params: { letterId: letter.id, character: letter.character, name: letter.name, pronunciation: letter.pronunciation, letterType: isVowel ? 'vowel' : 'consonant' },
+      params: { letterId: letter.id, character: letter.character, name: letter.name, letterType: isVowel ? 'vowel' : 'consonant' },
     });
   };
 
@@ -59,7 +58,7 @@ export default function EnglishAlphabetScreen() {
         padding="large"
         borderRadius="large"
         onPress={() => handleLetterPress(item)}
-        style={[styles.swipeCard, { width: CARD_SQUARE, height: CARD_SQUARE }]}
+        style={[styles.swipeCard, styles.visibleCard, { width: CARD_SQUARE, height: CARD_SQUARE }]}
       >
         <View style={styles.cardContent}>
           <Text
@@ -77,7 +76,6 @@ export default function EnglishAlphabetScreen() {
       </Card>
       <View style={styles.meta}>
         <Text style={styles.letterName}>{item.name}</Text>
-        <Text style={styles.letterPronunciation}>{item.pronunciation}</Text>
       </View>
     </View>
   );
@@ -204,6 +202,16 @@ const styles = StyleSheet.create({
   categoryToggle: { marginVertical: theme.spacing.md, flexDirection: 'row', justifyContent: 'space-between' },
   categoryButton: { width: 150 },
   swipeCard: { justifyContent: 'center', alignItems: 'center', alignSelf: 'center', paddingVertical: 0 },
+  visibleCard: {
+    backgroundColor: theme.colors.backgroundCard || '#FFFFFF',
+    borderWidth: 1,
+    borderColor: theme.colors.border.light,
+    elevation: 6,
+    shadowColor: 'rgba(0,0,0,0.08)',
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.08,
+    shadowRadius: 12,
+  },
   cardContent: { flex: 1, alignItems: 'center', justifyContent: 'center', paddingVertical: 0 },
   meta: { alignItems: 'center', justifyContent: 'center', marginTop: theme.spacing.md },
   bigLetter: {
@@ -215,7 +223,6 @@ const styles = StyleSheet.create({
     marginTop: 0,
   },
   letterName: { fontSize: theme.typography.caption, fontWeight: theme.typography.medium, color: theme.colors.textSecondary },
-  letterPronunciation: { fontSize: theme.typography.small, color: theme.colors.textTertiary, fontStyle: 'italic' },
   controlsRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: theme.spacing.md },
   indexText: { color: theme.colors.textSecondary, fontWeight: theme.typography.medium },
   practiceSection: { marginVertical: theme.spacing.xl, paddingBottom: theme.spacing.xl },

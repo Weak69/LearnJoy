@@ -13,14 +13,13 @@ import { speechService } from '@/services/speech';
 interface WordItem {
   id: string;
   text: string;
-  pronunciation: string;
   meaning: string;
   image?: string;
 }
 
 export default function EnglishLetterDetailPage() {
   const router = useRouter();
-  const params = useLocalSearchParams<{ letterId: string; character: string; name: string; pronunciation: string; letterType?: 'vowel' | 'consonant' }>();
+  const params = useLocalSearchParams<{ letterId: string; character: string; name: string; letterType?: 'vowel' | 'consonant' }>();
 
   const words: WordItem[] = useMemo(() => {
     const all = [...englishAlphabets.vowels, ...englishAlphabets.consonants];
@@ -42,7 +41,7 @@ export default function EnglishLetterDetailPage() {
           <View style={styles.letterRow}>
             <Text style={styles.bigLetter}>{params.character}</Text>
             <View style={{ marginLeft: theme.spacing.lg }}>
-              <Text style={styles.letterMeta}>Pronunciation: {params.pronunciation}</Text>
+              {/* Pronunciation removed */}
               {params.letterType && (
                 <Text style={styles.letterType}>{params.letterType === 'vowel' ? 'Vowel' : 'Consonant'}</Text>
               )}
@@ -57,7 +56,6 @@ export default function EnglishLetterDetailPage() {
             <View style={styles.wordRow}>
               <View style={{ flex: 1 }}>
                 <Text style={styles.wordText}>{w.text}</Text>
-                <Text style={styles.wordPronunciation}>{w.pronunciation}</Text>
                 <Text style={styles.wordMeaning}>{w.meaning}</Text>
               </View>
               <TouchableOpacity onPress={() => speechService.speakWord(w.text, 'english')} style={styles.speakerButton}>

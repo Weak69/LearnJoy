@@ -45,7 +45,7 @@ export default function Page() {
             <Text style={styles.bigLetter}>{params.character}</Text>
             <View style={{ marginLeft: theme.spacing.lg }}>
               <Text style={styles.letterMeta}>উচ্চারণ: {params.pronunciation}</Text>
-              <Button title="শুনো" variant="secondary" size="small" onPress={() => speechService.speakLetter(params.character as string, 'bangla')} />
+              <Button title="শুনো" variant="secondary" size="small" onPress={() => speechService.speakLetter(params.pronunciation ?? (params.character as string), 'bangla')} />
             </View>
           </View>
         </Card>

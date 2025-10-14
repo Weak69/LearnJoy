@@ -40,6 +40,14 @@ export interface SpeechOptions {
 // Cache available voices to choose best match per language
 let voicesCache: Speech.Voice[] | null = null;
 let voicesLogged = false;
+// Preferred voice overrides (optional by exact identifier/name)
+const preferredVoices: Record<string, string | undefined> = {
+  bn: undefined,
+  en: undefined,
+};
+
+// Preferred gender for voice selection. Default to 'female' per user request.
+let preferredGender: 'female' | 'male' | 'any' = 'female';
 
 async function loadVoicesOnce(): Promise<Speech.Voice[] | null> {
   try {
@@ -59,15 +67,47 @@ async function loadVoicesOnce(): Promise<Speech.Voice[] | null> {
 
 function pickVoiceForLanguage(allVoices: Speech.Voice[] | null, lang: 'bangla' | 'english'): Speech.Voice | undefined {
   if (!allVoices) return undefined;
+  const base = lang === 'bangla' ? 'bn' : 'en';
+
+  // If user has set a preferred voice identifier for this language, use it if available
+  const preferred = preferredVoices[base];
+  if (preferred) {
+    const byId = allVoices.find((v) => v.identifier === preferred || v.name === preferred || v.language === preferred);
+    if (byId) return byId;
+  }
+
+  // Try common locale codes first
   const targets = lang === 'bangla'
     ? ['bn-BD', 'bn_IN', 'bn-IN', 'bn']
     : ['en-US', 'en_GB', 'en-GB', 'en'];
+
   for (const t of targets) {
     const v = allVoices.find((voice) => voice.language?.toLowerCase().startsWith(t.toLowerCase()));
     if (v) return v;
   }
+
+  // Fallback: look for voices that mention 'bengali' or 'bangla' in name/identifier
+  const alt = allVoices.find((v) => {
+    const n = (v.name || '').toLowerCase();
+    const id = (v.identifier || '').toLowerCase();
+    return n.includes('bengali') || n.includes('bangla') || id.includes('bengali') || id.includes('bangla');
+  });
+  if (alt) return alt;
+
+  // If preferred gender is set, try to prefer voices indicating that gender in their name/identifier
+  if (preferredGender !== 'any') {
+    const genderHints = preferredGender === 'female'
+      ? ['female', 'woman', 'girl', 'femme', 'f']
+      : ['male', 'man', 'boy', 'm'];
+    const genderMatch = allVoices.find((v) => {
+      const n = (v.name || '').toLowerCase();
+      const id = (v.identifier || '').toLowerCase();
+      return genderHints.some((hint) => n.includes(hint) || id.includes(hint));
+    });
+    if (genderMatch) return genderMatch;
+  }
+
   // Last resort: any voice starting with the base language code
-  const base = lang === 'bangla' ? 'bn' : 'en';
   return allVoices.find((v) => v.language?.toLowerCase().startsWith(base));
 }
 
@@ -96,38 +136,77 @@ export const speechService = {
       await configureAudioMode();
       const voices = await loadVoicesOnce();
       const pickedVoice = pickVoiceForLanguage(voices, language);
-  console.log('Picked TTS voice:', pickedVoice);
+      console.log('Picked TTS voice:', pickedVoice);
 
-      const baseOptions: Speech.SpeechOptions = {
-        language: pickedVoice?.language ?? config.language,
-        voice: pickedVoice?.identifier,
-        pitch: pitch ?? config.pitch,
-        rate: rate ?? config.rate,
-        volume: volume ?? config.volume,
-        onStart,
-        onDone,
-      };
+      // Build base options; some platforms don't accept `voice` or `language` fields together,
+      // so we'll try a few strategies in order until one succeeds.
 
-      // Attach a resilient onError that retries without voice/language constraints
-      const resilientOnError = (error: any) => {
-        console.warn('TTS error (first attempt):', error);
-        // Retry with minimal options to let the engine choose defaults
-        try {
-          Speech.speak(text, {
-            pitch: pitch ?? config.pitch,
-            rate: rate ?? config.rate,
-            volume: volume ?? config.volume,
-            onStart,
-            onDone,
-            onError,
-          });
-        } catch (e) {
-          console.error('TTS retry failed:', e);
-          onError?.(e as any);
+      type AttemptOpt = Partial<Speech.SpeechOptions> & { attemptName: string; pitch?: number; rate?: number; volume?: number };
+      const attemptOptions = async (opts: AttemptOpt[]) => {
+        for (const opt of opts) {
+          try {
+            console.log('TTS attempt:', opt.attemptName, opt);
+            await new Promise<void>((resolve, reject) => {
+              try {
+                Speech.speak(text, {
+                  ...opt,
+                  pitch: typeof opt.pitch === 'number' ? opt.pitch : pitch ?? config.pitch,
+                  rate: typeof opt.rate === 'number' ? opt.rate : rate ?? config.rate,
+                  // volume might be unsupported on some platforms, but pass if present
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                  // @ts-ignore
+                  volume: typeof opt.volume === 'number' ? opt.volume : volume ?? config.volume,
+                  onStart,
+                  onDone: () => {
+                    onDone?.();
+                    resolve();
+                  },
+                  onError: (err) => {
+                    console.warn('TTS onError during attempt', opt.attemptName, err);
+                    // let the outer try/catch handle retries
+                    reject(err);
+                  },
+                });
+              } catch (e) {
+                reject(e);
+              }
+            });
+            // If speak returned without throwing, we consider it success and stop trying further attempts.
+            return;
+          } catch (err) {
+            console.warn('TTS attempt failed', opt.attemptName, err);
+            // Try next option
+          }
         }
+        // All attempts failed
+        throw new Error('All TTS attempts failed');
       };
 
-      Speech.speak(text, { ...baseOptions, onError: resilientOnError });
+      const attempts: (Partial<Speech.SpeechOptions> & { attemptName: string })[] = [];
+
+      // Preferred: picked voice with its language (if available)
+      if (pickedVoice) {
+        attempts.push({ attemptName: 'voiceWithLanguage', voice: pickedVoice.identifier, language: pickedVoice.language });
+        attempts.push({ attemptName: 'voiceOnly', voice: pickedVoice.identifier });
+      }
+
+      // Try explicit language codes commonly used for Bengali
+      attempts.push({ attemptName: 'bn-BD', language: 'bn-BD' });
+      attempts.push({ attemptName: 'bn-IN', language: 'bn-IN' });
+      attempts.push({ attemptName: 'bn', language: 'bn' });
+
+      // Fallback to default configured language code
+      attempts.push({ attemptName: 'configLanguage', language: config.language });
+
+      // Final fallback: no language/voice hints (let engine pick)
+      attempts.push({ attemptName: 'noHints' });
+
+      try {
+        await attemptOptions(attempts);
+      } catch (e) {
+        console.error('TTS: all strategies failed', e);
+        onError?.(e as any);
+      }
     } catch (error) {
       console.error('Speech error:', error);
       throw new Error('Failed to speak text');
@@ -288,3 +367,15 @@ export const audioService = {
 };
 
 export default speechService;
+
+// Runtime API: allow app to change preferred voice gender
+export function setPreferredVoiceGender(gender: 'female' | 'male' | 'any') {
+  preferredGender = gender;
+  console.log('Preferred TTS gender set to:', gender);
+}
+
+// Optionally expose preferredVoices map for direct overrides
+export function setPreferredVoiceIdentifier(languageCode: 'bn' | 'en', identifier?: string) {
+  preferredVoices[languageCode] = identifier;
+  console.log(`Preferred voice for ${languageCode} set to:`, identifier);
+}

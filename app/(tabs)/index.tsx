@@ -142,7 +142,7 @@ export default function LearnScreen() {
                 padding="large"
                 borderRadius="large"
                 onPress={module.onPress}
-                style={styles.moduleCard}
+                style={[styles.moduleCard, styles.visibleCard]}
               >
                 <View style={styles.moduleContent}>
                   {renderModuleVisual(module.id, module.color)}
@@ -165,7 +165,7 @@ export default function LearnScreen() {
                 padding="medium"
                 borderRadius="large"
                 onPress={action.onPress}
-                style={styles.quickActionCard}
+                style={[styles.quickActionCard, styles.visibleCard]}
               >
                 <View style={styles.quickActionContent}>
                   {renderAnimatedIcon(action.icon, action.color)}
@@ -236,6 +236,17 @@ const styles = StyleSheet.create({
   },
   moduleCard: {
     minHeight: 100,
+  },
+
+  visibleCard: {
+    backgroundColor: theme.colors.backgroundCard || '#FFFFFF',
+    borderWidth: 1,
+    borderColor: theme.colors.border.light,
+    elevation: 6,
+    shadowColor: 'rgba(0,0,0,0.08)',
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.08,
+    shadowRadius: 12,
   },
   moduleContent: {
     alignItems: 'center',

@@ -55,7 +55,7 @@ export default function BanglaAlphabetScreen() {
         padding="large"
         borderRadius="large"
         onPress={() => handleLetterPress(item)}
-        style={[styles.swipeCard, { width: CARD_SQUARE, height: CARD_SQUARE }]}
+        style={[styles.swipeCard, styles.visibleCard, { width: CARD_SQUARE, height: CARD_SQUARE }]}
       >
         <View style={styles.cardContent}>
           <Text
@@ -197,6 +197,18 @@ const styles = StyleSheet.create({
   categoryToggle: { marginVertical: theme.spacing.md, flexDirection: 'row', justifyContent: 'space-between' },
   categoryButton: { width: 150 },
   swipeCard: { justifyContent: 'center', alignItems: 'center', alignSelf: 'center', paddingVertical: 0 },
+  visibleCard: {
+    backgroundColor: theme.colors.backgroundCard || '#FFFFFF',
+    borderWidth: 1,
+    borderColor: theme.colors.border.light,
+    // Android shadow
+    elevation: 6,
+    // iOS shadow
+    shadowColor: 'rgba(0,0,0,0.08)',
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.08,
+    shadowRadius: 12,
+  },
   cardContent: { flex: 1, alignItems: 'center', justifyContent: 'center', paddingVertical: 0 },
   meta: { alignItems: 'center', justifyContent: 'center', marginTop: theme.spacing.md },
   bigLetter: {
